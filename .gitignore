@@ -21,6 +21,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+*.user
 
 # production
 /publish
@@ -32,3 +33,6 @@ yarn-error.log*
 
 # dependencies
 **/node_modules
+
+# Visual Studio 2019 cache/options directory
+.vs/

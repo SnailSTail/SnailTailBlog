@@ -25,6 +25,14 @@ namespace SnailTailBlog.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc ("v1",
+                    new Microsoft.OpenApi.Models.OpenApiInfo {
+                        Title = "BlogWebApi",
+                        Version = "v1"
+                });
+            });
             services.AddControllers();
             services.AddSpaStaticFiles(config => config.RootPath = "ClientApp/build");
         }
@@ -36,6 +44,13 @@ namespace SnailTailBlog.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BlogWebApi");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseHttpsRedirection();
 
