@@ -46,5 +46,10 @@ namespace SnailTailBlog.WebApi.Models
         /// 博客副标题
         /// </summary>
         public string BlogSubTitle { get; set; }
+
+        /// <summary>
+        /// 关于作者
+        /// </summary>
+        public string About { get; set; }
     }
 }
