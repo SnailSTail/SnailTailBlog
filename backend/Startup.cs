@@ -10,17 +10,21 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using SnailTailBlog.WebApi.Data;
 
 namespace SnailTailBlog.WebApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
+            Environment = env;
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -33,6 +37,20 @@ namespace SnailTailBlog.WebApi
                         Version = "v1"
                 });
             });
+
+            services.AddDbContext<BlogContext>(options =>
+            {
+                var connectionString = Configuration.GetConnectionString("BlogContext");
+                if (Environment.IsDevelopment())
+                {
+                    options.UseSqlite(connectionString);
+                }
+                else
+                {
+                    options.UseMySql(connectionString);
+                }
+            });
+
             services.AddControllers();
             services.AddSpaStaticFiles(config => config.RootPath = "ClientApp/build");
         }

@@ -36,3 +36,6 @@ yarn-error.log*
 
 # Visual Studio 2019 cache/options directory
 .vs/
+
+# database
+*.db
